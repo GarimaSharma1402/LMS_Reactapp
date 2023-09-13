@@ -22,13 +22,14 @@ const LoginwithToken = () =>{
         event.preventDefault();
         try{
             const response=await axios
-                .post('http://localhost:7223/api/Login',
+                .post('https://localhost:7223/api/Login',
                 loginobj
                 )
             setUser(response.data);
             console.log(response.data);
             if(response.data.role==='admin'){
-                navigate('/customer');
+                //navigate('/customer');
+                navigate('/loandata')
             }
         }
         catch(error){
@@ -51,6 +52,6 @@ const LoginwithToken = () =>{
                 {Error && <div>Invalid Details</div>}
             </form>
         </div>
-    );
+    )
 }
-export default LoginwithToken;
+export default LoginwithToken

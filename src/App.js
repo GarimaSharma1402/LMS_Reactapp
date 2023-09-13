@@ -6,6 +6,7 @@ import {RouterProvider} from 'react-router-dom';
 import ProtectedRoute from './Components/ProtectedRoute';
 import CustomerPage from './Pages/CustomerPage';
 import LoginPage from './Pages/LoginPage';
+import LoanDataPage from './Pages/LoanDataPage';
 import ProfilePage from './Pages/ProfilePage';
 import HomePage from './Pages/HomePage';
 // import LayoutComponent from './Components/Layout.component';
@@ -34,6 +35,12 @@ const router = createBrowserRouter([
     path: "/profile",
     element: <ProtectedRoute>
       <ProfilePage />
+    </ProtectedRoute>
+  },
+  {
+    path: "/loandata",
+    element: <ProtectedRoute>
+      <LoanDataPage />
     </ProtectedRoute>
   }
 ]);

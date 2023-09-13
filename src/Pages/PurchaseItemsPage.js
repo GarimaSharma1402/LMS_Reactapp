@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 
-const PurchaseItems = () => {
+const PurchaseItemsPage = () => {
     return (
         <div>
            <form onSubmit={handleApply}>
