@@ -22,7 +22,7 @@ const LoginwithToken = () =>{
         event.preventDefault();
         try{
             const response=await axios
-                .post('http://localhost:44361/api/Authorization',
+                .post('http://localhost:7223/api/Authorization',
                 loginobj
                 )
             setUser(response.data);
@@ -53,4 +53,4 @@ const LoginwithToken = () =>{
         </div>
     );
 }
-export default LoginwithToken
+export default LoginwithToken;

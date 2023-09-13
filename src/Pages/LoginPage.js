@@ -19,39 +19,43 @@ const LoginPage = () =>{
             custpassword: custpassword
         }
         event.preventDefault();
-        // try{
-        //     const response=await axios
-        //         .post('http://localhost:44361/api/Authorization',
-        //         loginobj
-        //         )
-        //     setUser(response.data);
-        //     console.log(response.data);
-        //     if(response.data.user_Id==='admin'){
-        //         navigate('/profile');
-        //     }
-        // }
-        // catch(error){
-        //     setError(error.Message);
-        // }
+        try {
+
+            axios
+                .post('https://localhost:7121/api/Login', res)
+                //.get('./data.json')
+                .then((response) => {
+                    console.log(response.data);
+                    const { custpassword, email } = response.data
+                    if (res.email == email && res.custpassword == custpassword) 
+                    {
+                       setError(false); 
+                    
+                    }
+                    
+                    else {
+                          setError(true);
+                         }
+                });
+        }
+        catch (error) {
+            setError(error.Message);
+        }
     }
     return(
         <div>
-            <table>
-                <tbody>
-                    <tr>
-                        <td>Admin Email: </td>
-                        <td><input type="email" value={email} id="email" onChange={handleEmail}/></td>
-                    </tr>
-                    <tr>
-                        <td>Admin Password: </td>
-                        <td><input type="password" value={custpassword} id="pwd" onChange={handlePwd}/></td>
-                    </tr>   
-                    <tr>
-                        <td><button type="submit" onClick={handleSubmit}>Login as Admin</button></td>
-                    </tr>
-                        
-                </tbody>
-            </table>
+           <form onSubmit={handleSubmit}>
+                <div>
+                    Email: <input type="text" value={email} onChange={handleEmail} />
+                </div>
+                <div>
+                    Password: <input type="password" value={custpassword} onChange={handlePwd} />
+                </div>
+                <div>
+                    <button type="submit"> Login </button>
+                </div>
+               {Error && <div>Invalid Details </div>}
+            </form> 
         </div>
     )
 }
