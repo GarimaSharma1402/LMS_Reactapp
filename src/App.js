@@ -30,6 +30,12 @@ const router = createBrowserRouter([
     </ProtectedRoute>, 
 
   },
+  {
+    path: "/profile",
+    element: <ProtectedRoute>
+      <ProfilePage />
+    </ProtectedRoute>
+  }
 ]);
 
 const App = () => {

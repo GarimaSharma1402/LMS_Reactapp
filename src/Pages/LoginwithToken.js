@@ -22,17 +22,17 @@ const LoginwithToken = () =>{
         event.preventDefault();
         try{
             const response=await axios
-                .post('http://localhost:7223/api/Authorization',
+                .post('http://localhost:7223/api/Login',
                 loginobj
                 )
             setUser(response.data);
             console.log(response.data);
-            if(response.data.user_Id==='admin'){
-                navigate('/profile');
+            if(response.data.role==='admin'){
+                navigate('/customer');
             }
         }
         catch(error){
-            setError(error.Message);
+            setError(true);
         }
     }
     
@@ -48,7 +48,7 @@ const LoginwithToken = () =>{
                 <div>
                     <button type = "submit"> Login </button>
                 </div>
-                {Error && <div>Invalied Details</div>}
+                {Error && <div>Invalid Details</div>}
             </form>
         </div>
     );
