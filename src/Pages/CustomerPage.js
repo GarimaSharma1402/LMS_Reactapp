@@ -17,7 +17,7 @@ function CustomerPage() {
         setToken(user.token);
         const headers= {"Authorization" : `Bearer ${user.token}`}
         console.log(headers);
-        axios.get('https://localhost:7223/api/Customer/getcustbyid?id='+cid,{headers})
+        axios.get('https://localhost:7223/api/Customer?id=E0001'+cid,{headers})
         .then(response => setCustomer(response.data));
     }
     

@@ -22,7 +22,7 @@ const LoginPage = () =>{
         try {
 
             axios
-                .post('https://localhost:7121/api/Login', res)
+                .post('https://localhost:7223/api/Login', res)
                 //.get('./data.json')
                 .then((response) => {
                     console.log(response.data);
