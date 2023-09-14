@@ -5,18 +5,25 @@ import {createBrowserRouter} from 'react-router-dom';
 import {RouterProvider} from 'react-router-dom';
 import ProtectedRoute from './Components/ProtectedRoute';
 import CustomerPage from './Pages/CustomerPage';
-import LoginPage from './Pages/LoginPage';
 import LoanDataPage from './Pages/LoanDataPage';
 import ProfilePage from './Pages/ProfilePage';
 import HomePage from './Pages/HomePage';
 // import LayoutComponent from './Components/Layout.component';
 import './App.css';
 import { AppProvider } from "../src/Context/App.context";
+import RegisterPage from './Pages/RegisterPage';
+import EmployeeCredentialFormPage from './Pages/EmployeeCredentialFormPage';
 
 const router = createBrowserRouter([
+  
   {
     path: "/",
-    element: <HomePage />,
+    element: <RegisterPage />
+
+  },
+  {
+    path: "/employeeCredentials",
+    element: <EmployeeCredentialFormPage />,
 
   },
   {
