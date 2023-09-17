@@ -29,7 +29,7 @@ const LoginwithToken = () =>{
             console.log(response.data);
             if(response.data.role==='admin'){
                 //navigate('/customer');
-                navigate('/loandata')
+                navigate('/AdminPortal')
             }
         }
         catch(error){
