@@ -3,7 +3,7 @@ import axios from 'axios';
 import {AppContext} from '../Context/App.context';
 import {useNavigate} from 'react-router-dom';
 import React from 'react';
-
+import './MyStyle.css';
 
 const EmployeeCredentialFormPage = () =>{
 
@@ -15,49 +15,49 @@ const EmployeeCredentialFormPage = () =>{
     }
 
     return(
-        <div>
+        <center>
             
-            <h3>Fill up the form to register </h3>
-           <form onSubmit={handleSubmit}>
+            <h3 className="title">Fill up the form to register </h3><br></br>
+           <form className="myForm" onSubmit={handleSubmit}>
                 <div>
                     Employee Name: <input type="text" />
-                </div>
+                </div><br></br>
                 <div>
-                    Employee Designation: 
+                    Employee Designation:&nbsp;&nbsp; 
                     <select>
                         <option value="Manager">Manager</option>
                         <option value="Executive">Executive</option>
                         <option value="SExecutive">Sr.Executive</option>
                         <option value="Clerk">Clerk</option>
                     </select>
-                </div>
+                </div><br></br>
                 <div>
-                    Employee Department: 
+                    Employee Department: &nbsp;&nbsp;
                     <select>
                         <option value="Finance">Finance</option>
                         <option value="HR">HR</option>
                         <option value="Sales">Sales</option>
                         <option value="Technology">Technology</option>
                     </select>
-                </div>
+                </div><br></br>
                 <div>
-                    Gender: 
+                    Gender: &nbsp;&nbsp;
                     <select>
                         
                         <option value="female">F</option>
                         <option value="male">M</option>
                     </select>
-                </div>
+                </div><br></br>
                 <div>
-                    Date of Birth: <input type="date" />
+                    Date of Birth: &nbsp;<input type="date" />
 
-                </div>
+                </div><br></br>
                 <div>
-                  <button type="submit"> Register and Continue</button>
+                  <button class="btn1" type="submit"> Register and Continue</button>
                 </div>
                
             </form> 
-        </div>
+        </center>
     )
       
 }
