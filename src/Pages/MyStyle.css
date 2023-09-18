@@ -1,0 +1,33 @@
+.title {
+    text-align: center;
+    width:70vw;
+    background-color: rgb(190,164,214);
+    padding: 2vw 1vw;
+    border-radius: 10px 10px 0 0;
+    font-size: 2rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    align-items: center;
+}
+
+.myForm {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width:70vw;
+    padding: 2vw 1vw;
+    background-color: rgb(250,194,194);
+    border-radius: 0 0 10px 10px;
+}
+
+.btn1 {
+    background-color: white;
+    font: size 20px;
+    text-align: center;
+    padding: 15px 30px;
+    transition-duration: 0.5s;
+}
+
+.btn1:hover{
+    background-color: green;
+}
