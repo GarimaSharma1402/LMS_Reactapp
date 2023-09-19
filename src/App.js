@@ -7,6 +7,7 @@ import ProtectedRoute from './Components/ProtectedRoute';
 import CustomerPage from './Pages/CustomerPage';
 import LoanDataPage from './Pages/LoanDataPage';
 import ProfilePage from './Pages/ProfilePage';
+import AdminPortal from './Pages/AdminPortal';
 import HomePage from './Pages/HomePage';
 // import LayoutComponent from './Components/Layout.component';
 import './App.css';
@@ -24,6 +25,11 @@ const router = createBrowserRouter([
   {
     path: "/employeeCredentials",
     element: <EmployeeCredentialFormPage />,
+
+  },
+  {
+    path: "/AdminPortal",
+    element: <AdminPortal/>,
 
   },
   {

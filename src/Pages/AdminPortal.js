@@ -3,12 +3,17 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
 import './MyStyle.css';
-const navigate=useNavigate();
-function handleClick(event)
-{
+//const navigate=useNavigate();
+const AdminPortal = () => {
+    const navigate=useNavigate();
+    const handleClick = async (event) =>
+    {
+   
+    
     navigate('/LoanDataPage');
-}
-function AdminPortal  (){
+    };
+
+
     return(
         <center>
             <h1 className="title">Welcome to Loan Management Application</h1><br></br>
