@@ -11,6 +11,7 @@ import ProfilePage from './Pages/ProfilePage';
 import AdminPortal from './Pages/AdminPortal';
 import UserPortal from './Pages/UserPortal';
 import HomePage from './Pages/HomePage';
+import UserItemsPage from './Pages/UserItemsPage';
 // import LayoutComponent from './Components/Layout.component';
 import './App.css';
 import { AppProvider } from "../src/Context/App.context";
@@ -67,6 +68,12 @@ const router = createBrowserRouter([
     path: "/Userloandata",
     element: <ProtectedRoute>
       <UserLoanDataPage />
+    </ProtectedRoute>
+  },
+  {
+    path: "/Useritemsdata",
+    element: <ProtectedRoute>
+      <UserItemsPage />
     </ProtectedRoute>
   }
 ]);
