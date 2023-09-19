@@ -2,8 +2,9 @@ import React, { useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { AppContext } from '../Context/App.context';
 
-function LoanDataPage() {
+function AdminLoanDataPage() {
     const [loandata, setloandata] = useState([]);
+    const [AllLoanData, setAllLoanData] = useState([]);
     const [cid, setCustid] = useState('');
     const { user, setUser } = useContext(AppContext);
 
@@ -21,6 +22,11 @@ function LoanDataPage() {
             .get('https://localhost:7223/api/LoanCard/employee/' + cid)
             .then((response) => setloandata(response.data));
         console.log(loandata);
+    };
+    const handleLoandata = () => {
+        axios
+            .get('https://localhost:7223/api/AdminLoanCardManagement')
+            .then((result) => setAllLoanData(result.data));
     };
 
     return (
@@ -40,9 +46,20 @@ function LoanDataPage() {
                         <br></br>
                     </div>
                 ))}
+                <button onClick={handleLoandata}>Get Loan data for all Customers </button> 
+                {AllLoanData.map((AllLoanData, index) => (
+                    <div key={index}>
+                        <div className="card-body">Loan ID: {AllLoanData?.loanId}</div>
+                        <div className="card-body">Loan Type: {AllLoanData?.loanType}</div>
+                        <div className="card-body">
+                            Loan Duration: {AllLoanData?.durationInYears}
+                        </div>
+                        <br></br>
+                    </div>
+                ))}
                 <button onClick={() => { setUser(null) }}> Logout </button>
             </div>
         </div>
     );
 }
-export default LoanDataPage;
+export default AdminLoanDataPage;

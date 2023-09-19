@@ -5,9 +5,10 @@ import {createBrowserRouter} from 'react-router-dom';
 import {RouterProvider} from 'react-router-dom';
 import ProtectedRoute from './Components/ProtectedRoute';
 import CustomerPage from './Pages/CustomerPage';
-import LoanDataPage from './Pages/LoanDataPage';
+import AdminLoanDataPage from './Pages/AdminLoanDataPage';
 import ProfilePage from './Pages/ProfilePage';
 import AdminPortal from './Pages/AdminPortal';
+import UserPortal from './Pages/UserPortal';
 import HomePage from './Pages/HomePage';
 // import LayoutComponent from './Components/Layout.component';
 import './App.css';
@@ -33,6 +34,11 @@ const router = createBrowserRouter([
 
   },
   {
+  path: "/UserPortal",
+  element: <UserPortal/>,
+
+},
+  {
     path: "/login",
     element: <LoginwithToken />,
 
@@ -51,9 +57,9 @@ const router = createBrowserRouter([
     </ProtectedRoute>
   },
   {
-    path: "/loandata",
+    path: "/Adminloandata",
     element: <ProtectedRoute>
-      <LoanDataPage />
+      <AdminLoanDataPage />
     </ProtectedRoute>
   }
 ]);

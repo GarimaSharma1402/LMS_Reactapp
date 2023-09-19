@@ -10,7 +10,7 @@ const AdminPortal = () => {
     {
    
     
-    navigate('/LoanDataPage');
+    navigate('/Adminloandata');
     };
 
 
@@ -19,9 +19,9 @@ const AdminPortal = () => {
             <h1 className="title">Welcome to Loan Management Application</h1><br></br>
             <h3 className="title">Admin Dashboard</h3><br></br>
             <Stack direction="row" spacing={2}>
-                <Button className="btn1">View Loans</Button>
-                <Button className="btn1" onSubmit={handleClick}>Apply For Loans</Button>
-                <Button className="btn1">View Items Purchased</Button>
+                <Button className="btn1">Customer Data Management</Button>
+                <Button className="btn1" onClick={handleClick}>Loan Card Management</Button>
+                <Button className="btn1">Items Master Data</Button>
             </Stack>
         </center>
     )

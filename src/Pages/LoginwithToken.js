@@ -31,6 +31,9 @@ const LoginwithToken = () =>{
                 //navigate('/customer');
                 navigate('/AdminPortal')
             }
+            if(response.data.role==='customer'){
+                navigate('/UserPortal');
+            }
         }
         catch(error){
             setError(true);
