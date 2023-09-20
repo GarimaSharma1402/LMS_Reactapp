@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 
 function UserLoanDataPage() {
     const [loandata, setloandata] = useState([]);
-    // const [user,setUser] = useContext(AppContext);
+    const {user,setUser} = useContext(AppContext);
     const cid = sessionStorage.getItem("Cid");
     const columnNames = ['Loan ID', 'Loan Type', 'Loan Duration'];
     const handleSubmit = () => {
@@ -32,15 +32,6 @@ function UserLoanDataPage() {
                         </tr>
                     </thead>
                     <tbody>
-                {/* {loandata.map((loan, index) => (
-                    <div key={index}>
-                        <div className="card-body">: {loan?.loanId}</div>
-                        <div className="card-body">Loan Type: {loan?.loanType}</div>
-                        <div className="card-body">
-                            Loan Duration: {loan?.durationInYears}
-                        </div>
-                        <br></br>
-                    </div> */}
                     {loandata.map((loan, index) => (
                     <tr key={index}>
                         <td>{loan?.loanId}</td>
@@ -50,10 +41,8 @@ function UserLoanDataPage() {
                     ))}
                     </tbody>
                     </table>
-
-                
-                {/* <button onClick={() => { setUser(null) }}> Logout </button> */}
             </div>
+            <button onClick={() => { setUser(null) }}> Logout </button>
         </div>
     );
 }

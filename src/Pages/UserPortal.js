@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext,useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from '../Context/App.context';
 import './MyStyle.css';
 //const navigate=useNavigate();
+
 const UserPortal = () => {
+    const { user, setUser } = useContext(AppContext);
     const navigate=useNavigate();
     const handleClick = async (event) =>
     {
@@ -22,6 +25,7 @@ const UserPortal = () => {
     
 
     return(
+        <div>
         <center>
             <h1 className="title">Welcome to Loan Management Application</h1><br></br>
             <h3 className="title">Customer Dashboard</h3><br></br>
@@ -30,7 +34,10 @@ const UserPortal = () => {
                 <Button className="btn1" onClick={handlePurchaseItem}> Apply For Loans</Button>
                 <Button className="btn1" onClick={handleItemClick}>View Items Purchased</Button>
             </Stack>
+            {/* <button onClick={() => { setUser(null) }}> Logout </button> */}
         </center>
+        
+        </div>
     )
 }
 export default UserPortal;

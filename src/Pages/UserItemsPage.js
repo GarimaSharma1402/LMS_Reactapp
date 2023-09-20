@@ -6,6 +6,7 @@ import { AppContext } from '../Context/App.context';
 function UserItemsPage() {
     const [itemData, setItemData] = useState([]);
     const cid = sessionStorage.getItem("Cid");
+    const { user, setUser } = useContext(AppContext);
     const columnNames = ['Issue ID','Item Description', 'Item Make', 'Item Category','Item Valuation'];
     const handleSubmit = () => {
         console.log(cid);
@@ -42,7 +43,9 @@ function UserItemsPage() {
                     ))}
                     </tbody>
                     </table>
+                    
             </div>
+            <button onClick={() => { setUser(null) }}> Logout </button>
         </div>
     );
 }

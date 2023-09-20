@@ -1,7 +1,9 @@
 import axios from 'axios';
 import React, { useContext,useState, useEffect } from 'react';
+import { AppContext } from '../Context/App.context';
 
 const PurchaseItemsPage = () => {
+    const { user, setUser } = useContext(AppContext);
     const [eid, setEid] = useState(null);
     const [icategory, setIcategory] = useState(null);
     const [desc, setDesc] = useState(null);
@@ -60,6 +62,7 @@ const PurchaseItemsPage = () => {
                 </div>
                {/* {Error && <div>Invalid Details </div>} */}
             </form> 
+            <button onClick={() => { setUser(null) }}> Logout </button>
         </div>
     )
 }
