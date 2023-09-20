@@ -11,6 +11,7 @@ import ProfilePage from './Pages/ProfilePage';
 import AdminPortal from './Pages/AdminPortal';
 import UserPortal from './Pages/UserPortal';
 import HomePage from './Pages/HomePage';
+import PurchaseItemsPage from './Pages/PurchaseItemsPage';
 import UserItemsPage from './Pages/UserItemsPage';
 // import LayoutComponent from './Components/Layout.component';
 import './App.css';
@@ -56,6 +57,12 @@ const router = createBrowserRouter([
     path: "/profile",
     element: <ProtectedRoute>
       <ProfilePage />
+    </ProtectedRoute>
+  },
+  {
+    path: "/purchaseItems",
+    element: <ProtectedRoute>
+      <PurchaseItemsPage />
     </ProtectedRoute>
   },
   {

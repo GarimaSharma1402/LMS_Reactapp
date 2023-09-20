@@ -13,9 +13,13 @@ const UserPortal = () => {
 
     const handleItemClick = async (event) =>
     {
-    navigate('/Useritemsdata');
+        navigate('/Useritemsdata');
     };
-
+    const handlePurchaseItem = async (event) =>
+    {
+        navigate('/purchaseItems');
+    };
+    
 
     return(
         <center>
@@ -23,7 +27,7 @@ const UserPortal = () => {
             <h3 className="title">Customer Dashboard</h3><br></br>
             <Stack direction="row" spacing={2}>
                 <Button className="btn1" onClick={handleClick}>View Loans</Button>
-                <Button className="btn1">Apply For Loans</Button>
+                <Button className="btn1" onClick={handlePurchaseItem}> Apply For Loans</Button>
                 <Button className="btn1" onClick={handleItemClick}>View Items Purchased</Button>
             </Stack>
         </center>

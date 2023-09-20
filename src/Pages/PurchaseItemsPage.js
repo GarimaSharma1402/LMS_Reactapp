@@ -1,9 +1,34 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useContext,useState, useEffect } from 'react';
 
 const PurchaseItemsPage = () => {
+    const [eid, setEid] = useState(null);
+    const [icategory, setIcategory] = useState(null);
+    const [desc, setDesc] = useState(null);
+    const [ivalue, setIvalue] = useState(null);
+    const [imake, setImake] = useState(null);
+    const handleEid =(event) =>{
+        setEid(event.target.value);
+    }
+    const handleIcategory =(event) =>{
+        setIcategory(event.target.value);
+    }
+    const handleDesc =(event) =>{
+        setDesc(event.target.value);
+    }
+    const handleIvalue =(event) =>{
+        setIvalue(event.target.value);
+    }
+    const handleImake =(event) =>{
+        setImake(event.target.value);
+    }
+    const handleApply = () =>
+    {
+        alert("Functionality coming soon...")
+    };
     return (
         <div>
+            <h2>Select Product and Apply for Loan</h2>
            <form onSubmit={handleApply}>
                 <div>
                     EmployeeID: <input type="text" value={eid} onChange={handleEid} />
@@ -33,8 +58,9 @@ const PurchaseItemsPage = () => {
                 <div>
                     <button type="submit"> Apply Loan </button>
                 </div>
-               {Error && <div>Invalid Details </div>}
+               {/* {Error && <div>Invalid Details </div>} */}
             </form> 
         </div>
     )
 }
+export default PurchaseItemsPage;
