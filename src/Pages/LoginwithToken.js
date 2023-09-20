@@ -27,6 +27,10 @@ const LoginwithToken = () =>{
                 )
             setUser(response.data);
             console.log(response.data);
+            sessionStorage.setItem("Cid", response.data.user_Id);
+            sessionStorage.setItem("role", response.data.role);
+            const y = sessionStorage.getItem("Cid");
+            console.log(y)
             if(response.data.role==='admin'){
                 //navigate('/customer');
                 navigate('/AdminPortal')

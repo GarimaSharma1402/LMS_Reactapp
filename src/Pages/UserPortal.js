@@ -22,8 +22,8 @@ const UserPortal = () => {
             <h1 className="title">Welcome to Loan Management Application</h1><br></br>
             <h3 className="title">Customer Dashboard</h3><br></br>
             <Stack direction="row" spacing={2}>
-                <Button className="btn1">View Loans</Button>
-                <Button className="btn1" onClick={handleClick}>Apply For Loans</Button>
+                <Button className="btn1" onClick={handleClick}>View Loans</Button>
+                <Button className="btn1">Apply For Loans</Button>
                 <Button className="btn1" onClick={handleItemClick}>View Items Purchased</Button>
             </Stack>
         </center>

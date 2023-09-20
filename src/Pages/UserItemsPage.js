@@ -5,36 +5,43 @@ import { AppContext } from '../Context/App.context';
 
 function UserItemsPage() {
     const [itemData, setItemData] = useState([]);
-    const [cid, setCustid] = useState('');
-    const handleCid = (event) => {
-        setCustid(event.target.value);
-    };
+    const cid = sessionStorage.getItem("Cid");
+    const columnNames = ['Issue ID','Item Description', 'Item Make', 'Item Category','Item Valuation'];
     const handleSubmit = () => {
-        // setToken(user.token);
-        // const headers = { Authorization: `Bearer ${user.token}` };
-        // console.log(headers);
+        console.log(cid);
         axios
             .get('https://localhost:7223/api/DisplayItemPurchaseById/' + cid)
             .then((response) => setItemData(response.data));
+        if(itemData===null) {
+            alert("No data found!");
+        }
         console.log(itemData);
     };
     return(
         <div>
             <div className="card text-center m-3">
-                Enter Customer Id:{' '}
-                <input type="text" value={cid} onChange={handleCid} />
-                <button onClick={handleSubmit}> Fetch Data </button>
-                {itemData.map((item, index) => (
-                    <div key={index}>
-                        <div className="card-body">Issue ID: {item?.issueId}</div>
-                        <div className="card-body">Item Description: {item?.itemDescription}</div>
-                        <div className="card-body">Item Make: {item?.itemMake}</div>
-                        <div className="card-body">Item Category: {item?.itemCategory}</div>
-                        <div className="card-body">Item Valuation: {item?.itemValuation}</div>
+                <Button onClick={handleSubmit}> Fetch Items Data </Button>
+                <table>
+                    <thead>    
+                        <tr>
+                            {columnNames.map((columnName)=>(
+                                <th key = {columnName}>{columnName}</th>
+                            ))}    
+                        </tr>
+                    </thead>
 
-                        <br></br>
-                    </div>
-                ))}
+                    <tbody>
+                    {itemData.map((item, index) => (
+                    <tr key={index}>
+                        <td>{item?.issueId}</td>
+                        <td>{item?.itemDescription}</td>
+                        <td>{item?.itemMake}</td>
+                        <td>{item?.itemCategory}</td>
+                        <td>{item?.itemValuation}</td>        
+                    </tr>
+                    ))}
+                    </tbody>
+                    </table>
             </div>
         </div>
     );

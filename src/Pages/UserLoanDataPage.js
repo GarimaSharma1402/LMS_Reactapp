@@ -1,23 +1,18 @@
 import React, { useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { AppContext } from '../Context/App.context';
+import Button from '@mui/material/Button';
 
 function UserLoanDataPage() {
     const [loandata, setloandata] = useState([]);
-    
-    const [cid, setCustid] = useState('');
-    const { user, setUser } = useContext(AppContext);
-
-    const [token, setToken] = useState('');
-
-    const handleCid = (event) => {
-        setCustid(event.target.value);
-    };
-
+    // const [user,setUser] = useContext(AppContext);
+    const cid = sessionStorage.getItem("Cid");
+    const columnNames = ['Loan ID', 'Loan Type', 'Loan Duration'];
     const handleSubmit = () => {
-        setToken(user.token);
-        const headers = { Authorization: `Bearer ${user.token}` };
-        console.log(headers);
+        // setToken(user.token);
+        // const headers = { Authorization: `Bearer ${user.token}` };
+        // console.log(headers);
+        console.log(cid);
         axios
             .get('https://localhost:7223/api/LoanCard/employee/' + cid)
             .then((response) => setloandata(response.data));
@@ -27,22 +22,37 @@ function UserLoanDataPage() {
     return (
         <div>
             <div className="card text-center m-3">
-                Enter Customer Id:{' '}
-                <input type="text" value={cid} onChange={handleCid} />
-                <button onClick={handleSubmit}> Fetch Data </button>
-                <h1> Loan Details:</h1>
-                {loandata.map((loan, index) => (
+                <Button onClick={handleSubmit}> Fetch Loan Data </Button>
+                <table>
+                    <thead>    
+                        <tr>
+                            {columnNames.map((columnName)=>(
+                                <th key = {columnName}>{columnName}</th>
+                            ))}    
+                        </tr>
+                    </thead>
+                    <tbody>
+                {/* {loandata.map((loan, index) => (
                     <div key={index}>
-                        <div className="card-body">Loan ID: {loan?.loanId}</div>
+                        <div className="card-body">: {loan?.loanId}</div>
                         <div className="card-body">Loan Type: {loan?.loanType}</div>
                         <div className="card-body">
                             Loan Duration: {loan?.durationInYears}
                         </div>
                         <br></br>
-                    </div>
-                ))}
+                    </div> */}
+                    {loandata.map((loan, index) => (
+                    <tr key={index}>
+                        <td>{loan?.loanId}</td>
+                        <td>{loan?.loanType}</td>
+                        <td>{loan?.durationInYears}</td>      
+                    </tr>
+                    ))}
+                    </tbody>
+                    </table>
+
                 
-                <button onClick={() => { setUser(null) }}> Logout </button>
+                {/* <button onClick={() => { setUser(null) }}> Logout </button> */}
             </div>
         </div>
     );
