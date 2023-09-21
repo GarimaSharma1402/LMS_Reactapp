@@ -18,6 +18,7 @@ import './App.css';
 import { AppProvider } from "../src/Context/App.context";
 import RegisterPage from './Pages/RegisterPage';
 import EmployeeCredentialFormPage from './Pages/EmployeeCredentialFormPage';
+import CustomerLoanDataPage from './Pages/CustomerLoanDataPage';
 
 const router = createBrowserRouter([
   
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
     element: <ProtectedRoute>
       <UserItemsPage />
     </ProtectedRoute>
+  },
+  {
+    path: "/CustomerLoanData",
+    element: <CustomerLoanDataPage/>,
   }
 ]);
 
