@@ -9,6 +9,11 @@
     align-items: center;
 }
 
+.cl1 {
+    background-color: red;
+    width: 70vw;
+}
+
 .myForm {
     text-align: center;
     display: flex;
