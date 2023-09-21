@@ -71,10 +71,30 @@ function AdminLoanDataPage() {
     return (
         <div>
             <div className="card text-center m-3">
+                <h1>Loan Data Management</h1>
+                <h3>Add New Loan Data </h3>
+                <form >
+                    <div>
+                    Loan Type: 
+                        <select>
+                            <option value="Furniture">Furniture</option>
+                            <option value="Stationery">Stationery</option>
+                            <option value="Crockery">Crockery</option>
+                        </select>
+                    </div>
+                    <div>
+                        Loan Duration: <input type="text" />
+                    </div>
+                    <div>
+                        <button type = "submit"> Add New Loan </button>
+                    </div>
+                </form>                    
+                <br></br>     
+                <h3> View Loan Details: </h3>
                 Enter Customer Id:{' '}
                 <input type="text" value={cid} onChange={handleCid} />
                 <button onClick={handleSubmit}> Fetch Data </button>
-                <h1> Loan Details:</h1>
+                
                 {loandata.map((loan, index) => (
                     <div key={index}>
                         <div className="card-body">Loan ID: {loan?.loanId}</div>
