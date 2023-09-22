@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\Pages"
   ],
-  "SelectedNode": "\\D:\\LMS_frontend",
+  "SelectedNode": "\\src\\Pages\\LoanDataPage.js",
   "PreviewInSolutionExplorer": false
 }

@@ -36,11 +36,11 @@ function AdminLoanDataPage() {
             .then((response) => setItemdata(response.data));
         console.log(itemdata);
     };
-    const handleItemdata = () => {
-        axios
-            .get('https://localhost:7223/api/')
-            .then((result) => setAllItemData(result.data));
-    };
+    // const handleItemdata = () => {
+    //     axios
+    //         .get('https://localhost:7223/api/')
+    //         .then((result) => setAllItemData(result.data));
+    // };
     const handleItemId =(event) => {
         setItemId(event.target.value);
     }
@@ -125,10 +125,10 @@ function AdminLoanDataPage() {
                     </div>
                 </form>                    
                 <br></br>     
-                {/* <h3> View Loan Details: </h3>
+                 {/* <h3> View Loan Details: </h3>
                 Enter Customer Id:{' '}
                 <input type="text" value={cid} onChange={handleCid} />
-                <button onClick={handleSubmit}> Fetch Data </button> */}
+                <button onClick={handleSubmit}> Fetch Data </button> 
                 
                 {itemdata.map((item, index) => (
                     <div key={index}>
@@ -181,9 +181,9 @@ function AdminLoanDataPage() {
                 //         <br></br>
                 //     </div>
                 // ))}
-                <button onClick={() => { setUser(null) }}> Logout </button>
+                <button onClick={() => { setUser(null) }}> Logout </button>*/}
             </div>
-        </div>
+        </div> 
     );
 }
 export default AdminItemDataPage;
