@@ -18,7 +18,9 @@ import './App.css';
 import { AppProvider } from "../src/Context/App.context";
 import RegisterPage from './Pages/RegisterPage';
 import EmployeeCredentialFormPage from './Pages/EmployeeCredentialFormPage';
-import CustomerLoanDataPage from './Pages/CustomerLoanDataPage';
+import CustomerLoanDataPage from './Pages/AdminEditCustomers';
+import AdminEditCustomers from './Pages/AdminEditCustomers';
+import AdminItemDataPage from './Pages/AdminItemDataPage';
 
 const router = createBrowserRouter([
   
@@ -85,9 +87,18 @@ const router = createBrowserRouter([
     </ProtectedRoute>
   },
   {
-    path: "/CustomerLoanData",
-    element: <CustomerLoanDataPage/>,
+    path: "/ViewCustomers",
+    element: <ProtectedRoute>
+    <CustomerLoanDataPage/>
+    </ProtectedRoute>
+  },
+  {
+    path: "/AdminViewItems",
+    element: <ProtectedRoute>
+    <AdminItemDataPage/>
+    </ProtectedRoute>
   }
+
 ]);
 
 const App = () => {

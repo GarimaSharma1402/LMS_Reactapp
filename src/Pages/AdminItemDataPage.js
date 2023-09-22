@@ -3,10 +3,10 @@ import axios from 'axios';
 import Button from '@mui/material/Button';
 import { AppContext } from '../Context/App.context';
 
-function AdminLoanDataPage() {
+function AdminItemDataPage() {
     const [itemdata, setItemdata] = useState([]);
     const [AllItemData, setAllItemData] = useState([]);
-    //const [cid, setCustid] = useState('');
+    const [cid, setCustid] = useState('');
     const { user, setUser } = useContext(AppContext);
     const[Error, setError] = useState(false);
     const [isFormOpen, setIsFormOpen] = useState(false);
@@ -125,63 +125,9 @@ function AdminLoanDataPage() {
                     </div>
                 </form>                    
                 <br></br>     
-                 {/* <h3> View Loan Details: </h3>
-                Enter Customer Id:{' '}
-                <input type="text" value={cid} onChange={handleCid} />
-                <button onClick={handleSubmit}> Fetch Data </button> 
-                
-                {itemdata.map((item, index) => (
-                    <div key={index}>
-                        <div className="card-body">Item Id: {item?.itemId}</div>
-                        <div className="card-body">Item Category: {item?.itemCat}</div>
-                        <div className="card-body">Item Description: {item?.itemDesc}</div>
-                        <div className="card-body">Item Value: {item?.itemValue}</div>
-                        <div className="card-body">Issue Status: {item?.issueStatus}</div>
-                        <div className="card-body">Item Make: {item?.itemMake}</div>
-                        <div> <Button className="btn1" onClick={handleEditItem}>Edit Items</Button> </div>
-                        <div> <Button className = "btn1">Delete Items</Button> </div>
-                        <br></br>
-                    </div>
-                ))}
-                <button onClick={handleItemdata}>Get Loan data for all Customers </button> 
-                // {AllItemData.map((AllItemData, index) => (
-                //     <div key={index}>
-                //         <div className="card-body">Item ID: {AllLoanData?.loanId}</div>
-                //         <div className="card-body">Loan Type: {AllLoanData?.loanType}</div>
-                //         <div className="card-body">
-                //             Loan Duration: {AllLoanData?.durationInYears}
-                //         </div>
-                //         <div> <Button className="btn1" onClick={handleEditLoan}>Edit Loans</Button> 
-                //         {isFormOpen &&(
-                //             <form onSubmit={handleSubmitEditLoan}>
-                //                 <div>
-                //                     Loan ID: <input type="text" value={loanId} onChange={handleLoanId} />
-                //                 </div>
-                //                 <div>
-                //                     Loan Type: 
-                //                     <select value={loanType} onChange={handleLoanType}>
-                //                     <option value="Furniture">Furniture</option>
-                //                     <option value="Stationery">Stationery</option>
-                //                     <option value="Crockery">Crockery</option>
-                //                     </select>
-                //                 </div>
-                //                 <div>
-                //                     Loan Duration: <input type="text" value={durationInYears} onChange={handleLoanDuration} />
-                //                 </div>
-                //                 <div>
-                //                     <button type = "submit"> Edit Details </button>
-                //                 </div>
-                //             </form>
+                <button>Get All Items Data</button>
+                <button onClick={() => { setUser(null) }}> Logout </button>
 
-                //        )}  
-                            
-                //         </div>
-
-                //         <div> <Button className = "btn1">Delete Loans</Button> </div>
-                //         <br></br>
-                //     </div>
-                // ))}
-                <button onClick={() => { setUser(null) }}> Logout </button>*/}
             </div>
         </div> 
     );

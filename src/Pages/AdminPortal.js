@@ -8,20 +8,25 @@ const AdminPortal = () => {
     const navigate=useNavigate();
     const handleClick = async (event) =>
     {
-   
-    
-    navigate('/Adminloandata');
+        navigate('/Adminloandata');
     };
-
+    const handleCustomer = async (event) =>
+    {
+        navigate('/ViewCustomers');
+    }
+    const handleItems = async (event) =>
+    {
+        navigate('/AdminViewItems');
+    }
 
     return(
         <center>
             <h1 className="title">Welcome to Loan Management Application</h1><br></br>
             <h3 className="title">Admin Dashboard</h3><br></br>
             <Stack direction="row" spacing={2}>
-                <Button className="btn1">Customer Data Management</Button>
+                <Button className="btn1" onClick={handleCustomer}>Customer Data Management</Button>
                 <Button className="btn1" onClick={handleClick}>Loan Card Management</Button>
-                <Button className="btn1">Items Master Data</Button>
+                <Button className="btn1" onClick={handleItems}>Items Master Data</Button>
             </Stack>
         </center>
     )
