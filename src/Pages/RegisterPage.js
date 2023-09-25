@@ -58,7 +58,7 @@ const RegisterPage = () => {
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-dark">
         <a className="navbar-brand" href="#">
-          Navbar
+          LMS
         </a>
         <button
           className="navbar-toggler"
