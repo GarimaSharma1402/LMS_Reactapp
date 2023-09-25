@@ -27,7 +27,7 @@ const LoginwithToken = () =>{
                 )
             setUser(response.data);
             console.log(response.data);
-            sessionStorage.setItem("Cid", response.data.user_Id);
+            sessionStorage.setItem("Cid", response.data.employeeId);
             sessionStorage.setItem("role", response.data.role);
             const y = sessionStorage.getItem("Cid");
             console.log(y)
@@ -35,7 +35,7 @@ const LoginwithToken = () =>{
                 //navigate('/customer');
                 navigate('/AdminPortal')
             }
-            if(response.data.role==='customer'){
+            if(response.data.role==='Employee'){
                 navigate('/UserPortal');
             }
         }
@@ -110,7 +110,7 @@ const LoginwithToken = () =>{
         </div>
         <div className="card-footer">
           <div className="d-flex justify-content-center links">
-            Don't have an account?<a href="http://localhost:3000/register">Sign Up</a>
+            Don't have an account?<a href="http://localhost:3000/employeeCredentials">Sign Up</a>
           </div>
           
         </div>

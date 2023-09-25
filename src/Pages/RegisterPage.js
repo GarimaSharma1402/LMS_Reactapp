@@ -7,8 +7,11 @@ import "./MyStyle.css";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const [registerobj,setRegisterobj] = useState({employeeId: '', employeeEmail: '', employeePassword: '', employeeRole: ''}); 
   const [email, setEmail] = useState("");
   const [custpassword, setPwd] = useState("");
+  const role = "Employee";
+  const employeeId = sessionStorage.getItem("Cid");
   const [Error, setError] = useState(false);
  // const[myText,handleText]=useState("");
   const handleEmail = (event) => {
@@ -18,42 +21,25 @@ const RegisterPage = () => {
     setPwd(event.target.value);
   };
   const handleSubmit = async (event) => {
-    navigate("/employeeCredentials");
-    // const res ={
-    //     email:email,
-    //     custpassword: custpassword
-    // }
-    // event.preventDefault();
-    // try {
+    registerobj.employeeId= employeeId;
+    registerobj.employeeEmail=email;
+    registerobj.employeePassword=custpassword;
+    registerobj.employeeRole=role;
 
-    //     axios
-    //         .post('https://localhost:7223/api/Login', res)
-    //         //.get('./data.json')
-    //         .then((response) => {
-    //             console.log(response.data);
-    //             const { custpassword, email } = response.data
-    //             if (res.email == email && res.custpassword == custpassword)
-    //             {
-    //                setError(false);
-
-    //             }
-
-    //             else {
-    //                   setError(true);
-    //                  }
-    //         });
-    // }
-    // catch (error) {
-    //     setError(error.Message);
-    // }
-  };
-  /*const handleRequest= (event) =>
-  {
-     let url={myText};
-     let finalURL='https://google.com'+url;
-     handleText(event.target.value);
-     window.location.replace(finalURL);
-  }*/
+    event.preventDefault();
+    try{
+        const response=await axios
+            .post('https://localhost:7223/api/Register/RegisterEmployeeCredential',
+            registerobj
+            )
+        
+        console.log(response.data);
+    }
+    catch(error){
+        setError(true);
+    }
+    navigate("/");
+  }
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-dark">
@@ -175,4 +161,6 @@ const RegisterPage = () => {
     </div>
   );
 };
+
+
 export default RegisterPage;
