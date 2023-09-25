@@ -4,6 +4,10 @@ import Button from '@mui/material/Button';
 import { AppContext } from '../Context/App.context';
 
 function AdminLoanDataPage() {
+    const [deleteLoanId, setDeleteLoanId] = useState('');
+    const [newType, setNewType]  =useState('');
+    const [newDuration, setNewDuration]= useState('');
+    const [newLoanObj, setNewLoanObj] = useState({loanType: '', durationInYears: ''});
     const [loandata, setloandata] = useState([]);
     const [AllLoanData, setAllLoanData] = useState([]);
     const [cid, setCustid] = useState('');
@@ -12,29 +16,41 @@ function AdminLoanDataPage() {
     const [isFormOpen, setIsFormOpen] = useState(false);
 
     const [token, setToken] = useState('');
-    const [loanEditObj,setloanEditObj] = useState({loanId: '', loanType: '', durationInYears: '', loanTypeNavigation: 'null'});
+    const [loanEditObj,setloanEditObj] = useState({loanId: '', loanType: '', durationInYears: ''});
     const[loanId,setLoanId] = useState('');
     const[loanType,setLoanType] = useState('');
     const [durationInYears, setDurationInYears] = useState('');
     const loanTypeNavigation = null;
 
-
-    const handleCid = (event) => {
-        setCustid(event.target.value);
-    };
-
-    const handleSubmit = () => {
-        setToken(user.token);
-        const headers = { Authorization: `Bearer ${user.token}` };
-        console.log(headers);
-        axios
-            .get('https://localhost:7223/api/LoanCard/employee/' + cid)
-            .then((response) => setloandata(response.data));
-        console.log(loandata);
-    };
+    const handleNewType = (event) =>{
+        setNewType(event.target.value);
+    }
+    const handleNewDuration = (event) =>{
+        setNewDuration(event.target.value);
+    }
+    const handleNewLoan  = async (event) =>{
+        newLoanObj.loanType = newType;
+        newLoanObj.durationInYears = newDuration;
+        event.preventDefault();
+        try{
+            const response=await axios
+                .post('https://localhost:7223/api/AdminLoanCardManagement/AddLoanCard',
+                newLoanObj
+                )
+            
+            console.log(response.data);
+           
+        }
+        catch(error){
+            setError(true);
+        }
+  
+    
+    }
+    
     const handleLoandata = () => {
         axios
-            .get('https://localhost:7223/api/AdminLoanCardManagement')
+            .get('https://localhost:7223/api/AdminLoanCardManagement/GetAllLoans')
             .then((result) => setAllLoanData(result.data));
     };
     const handleLoanId =(event) => {
@@ -53,11 +69,12 @@ function AdminLoanDataPage() {
         loanEditObj.loanId = loanId;
         loanEditObj.loanType = loanType;
         loanEditObj.durationInYears = durationInYears;
-        loanEditObj.loanTypeNavigation = loanTypeNavigation;
+
         event.preventDefault();
         try{
+            console.log(loanEditObj);
             const response=await axios
-                .put('https://localhost:7223/api/AdminLoanCardManagement/' + loanId,
+                .put('https://localhost:7223/api/AdminLoanCardManagement/UpdateLoanCard/' + loanId,
                 loanEditObj
                 )
                 alert(response.data);
@@ -68,49 +85,47 @@ function AdminLoanDataPage() {
         setIsFormOpen(false);
     }
 
+    const handleDeleteLoanId =(event) => {
+        setDeleteLoanId(event.target.value);
+    }
+    const handleDeleteLoan = () => {
+        
+        axios
+            .delete('https://localhost:7223/api/AdminLoanCardManagement/DeleteLoanCard/' + deleteLoanId)
+            .then(result => {console.log("deleted successfully")
+        })
+    
+    }
+
+
+
     return (
         <div>
             <div className="card text-center m-3">
                 <h1>Loan Data Management</h1>
                 <h3>Add New Loan Data </h3>
-                <form >
+                <form onSubmit={handleNewLoan}>
                     <div>
                     Loan Type: 
-                        <select>
+                        <select onChange={handleNewType}>
+                            <option value="select">Select</option>
                             <option value="Furniture">Furniture</option>
                             <option value="Stationery">Stationery</option>
                             <option value="Crockery">Crockery</option>
                         </select>
                     </div>
                     <div>
-                        Loan Duration: <input type="text" />
+                        Loan Duration: <input type="text" onChange={handleNewDuration} />
                     </div>
                     <div>
                         <button type = "submit"> Add New Loan </button>
                     </div>
                 </form>                    
                 <br></br>     
-                <h3> View Loan Details: </h3>
-                Enter Customer Id:{' '}
-                <input type="text" value={cid} onChange={handleCid} />
-                <button onClick={handleSubmit}> Fetch Data </button>
-                
-                {loandata.map((loan, index) => (
-                    <div key={index}>
-                        <div className="card-body">Loan ID: {loan?.loanId}</div>
-                        <div className="card-body">Loan Type: {loan?.loanType}</div>
-                        <div className="card-body">
-                            Loan Duration: {loan?.durationInYears}
-                        </div>
-                        <div> <Button className="btn1" onClick={handleEditLoan}>Edit Loans</Button> </div>
-                        <div> <Button className = "btn1">Delete Loans</Button> </div>
-                        <br></br>
-                    </div>
-                ))}
                 <button onClick={handleLoandata}>Get Loan data for all Customers </button> 
                 {AllLoanData.map((AllLoanData, index) => (
                     <div key={index}>
-                        <div className="card-body">Loan ID: {AllLoanData?.loanId}</div>
+                        <div className="card-body">Loan ID: {AllLoanData?.LoanId}</div>
                         <div className="card-body">Loan Type: {AllLoanData?.loanType}</div>
                         <div className="card-body">
                             Loan Duration: {AllLoanData?.durationInYears}
@@ -124,6 +139,7 @@ function AdminLoanDataPage() {
                                 <div>
                                     Loan Type: 
                                     <select value={loanType} onChange={handleLoanType}>
+                                    <option value="select">Select</option>
                                     <option value="Furniture">Furniture</option>
                                     <option value="Stationery">Stationery</option>
                                     <option value="Crockery">Crockery</option>
@@ -141,7 +157,16 @@ function AdminLoanDataPage() {
                             
                         </div>
 
-                        <div> <Button className = "btn1">Delete Loans</Button> </div>
+                        <div> 
+                            <form onSubmit={handleDeleteLoan}>
+                            <div>
+                                Loan Id to delete: <input type="text" onChange={handleDeleteLoanId} />
+                            </div> 
+                            <div><Button className = "btn1" type="submit" >Delete Loans</Button>
+                            </div>
+
+                            </form> 
+                        </div>
                         <br></br>
                     </div>
                 ))}

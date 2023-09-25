@@ -4,6 +4,7 @@ import { AppContext} from '../Context/App.context';
 import './MyStyle.css';
 
 const AdminEditCustomers = () => {
+    const [allCustData, setAllCustData] = useState([]);
     const [ename,SetName]=useState("");
     const [id,SetId]=useState("");
     const [dept,SetDept]=useState("");
@@ -57,6 +58,13 @@ const AdminEditCustomers = () => {
             console.error('Error: ',error);
         }
     }
+
+    const handleGetAllCustomers = () => {
+        axios
+            .get('https://localhost:7223/api/AdminCustomerDataManagement')
+            .then((result) => setAllCustData(result.data));
+        console.log(allCustData);
+    }
     return(
         <center><br></br>
            <h1 className="title">Loan Management Application</h1> <br></br>
@@ -94,7 +102,7 @@ const AdminEditCustomers = () => {
                 </div><br></br>
                 <div>
                     <p><button className="btn1" onClick={handleSubmit}>Add Data</button>&nbsp;&nbsp;
-                    <button className='btn1'>Get All Customers</button> &nbsp;&nbsp;
+                    <button className='btn1' onClick={handleGetAllCustomers}>Get All Customers</button> &nbsp;&nbsp;
                     <button className='btn1'>Log Out</button></p>
                  </div>   
            </form>
