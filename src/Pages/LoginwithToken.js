@@ -31,7 +31,7 @@ const LoginwithToken = () =>{
             sessionStorage.setItem("role", response.data.role);
             const y = sessionStorage.getItem("Cid");
             console.log(y)
-            if(response.data.role==='admin'){
+            if(response.data.role==='Admin'){
                 //navigate('/customer');
                 navigate('/AdminPortal')
             }
