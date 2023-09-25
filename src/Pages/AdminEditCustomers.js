@@ -2,8 +2,11 @@ import React, { useContext,useState, useEffect } from 'react';
 import axios from 'axios';
 import { AppContext} from '../Context/App.context';
 import './MyStyle.css';
+import Button from '@mui/material/Button';
 
 const AdminEditCustomers = () => {
+    const [deleteCustId, setDeleteCustId] = useState('');
+    const[Error, setError] = useState(false);
     const [allCustData, setAllCustData] = useState([]);
     const [ename,SetName]=useState("");
     const [id,SetId]=useState("");
@@ -11,13 +14,32 @@ const AdminEditCustomers = () => {
     const [gender,SetGender]=useState("");
     const [Designation,setDesignation]=useState("");
     const [dob,SetDob]=useState("");
-    const [doj,SetDoj]=useState("");
-    const [customerEditObj,setcustomerEditObj] = useState({id: '', ename: '', Designation: '', dept: '',dob: '',doj: '',gender: ''});
-
-    const handleEid = (event)=>{
+    const [isFormOpen, setIsFormOpen] = useState(false);
+    //const [doj,SetDoj]=useState("");
+    const [customerEditObj,setcustomerEditObj] = useState({employeeId: '',employeeName: '', designation: '', department: '', gender: '', dateOfBirth: ''});
+    const [newCustObj, setnewCustObj]= useState({employeeName: '', designation: '', department: '', gender: '', dateOfBirth: ''})
+    const handleSubmitEditCustomers = async(event)=>{
+        customerEditObj.employeeId = id;
+        customerEditObj.employeeName = ename;
+        customerEditObj.designation = Designation;
+        customerEditObj.department=dept;
+        customerEditObj.dateOfBirth = dob;
+        //customerEditObj.doj=doj;
+        customerEditObj.gender=gender;
+        console.log(customerEditObj);
+        event.preventDefault();
+        try{
+        const response=await axios.put('https://localhost:7223/api/AdminCustomerDataManagement?EmployeeID='+id,customerEditObj);
+        //alert(response.data);
+        }
+        catch(error){
+            console.error('Error: ',error);
+        }
+        setIsFormOpen(false);
+    }
+    const handleId = (event) =>{
         SetId(event.target.value);
-    };
-
+    }
     const handleEname = (event)=>{
         SetName(event.target.value);
     };
@@ -30,10 +52,6 @@ const AdminEditCustomers = () => {
         SetDept(event.target.value);
     };
 
-    const handleDoj = (event)=>{
-        SetDoj(event.target.value);
-    };
-
     const handleGender = (event)=>{
         SetGender(event.target.value);
     };
@@ -41,21 +59,28 @@ const AdminEditCustomers = () => {
     const handleDesignation =(event) =>{
         setDesignation(event.target.value);
     };
-    const handleSubmit = async(event)=>{
-        customerEditObj.id = id;
-        customerEditObj.ename = ename;
-        customerEditObj.Designation = Designation;
-        customerEditObj.dept=dept;
-        customerEditObj.dob = dob;
-        customerEditObj.doj=doj;
-        customerEditObj.gender=gender;
+    const handleEditCust = async(event)=>{
+        setIsFormOpen(true);
+        
+    }
+
+    const handleNewCustomer = async(event)=>{
+        newCustObj.employeeName=ename;
+        newCustObj.designation=Designation;
+        newCustObj.department=dept;
+        newCustObj.gender=gender;
+        newCustObj.dateOfBirth=dob;
         event.preventDefault();
         try{
-        const response=await axios.put('https://localhost:7223/api/AdminCustomerDataManagement/'+id,customerEditObj);
-        alert(response.data);
+            const response=await axios
+                .post('https://localhost:7223/api/AdminCustomerDataManagement',
+                newCustObj
+                )
+            
+            console.log(response.data);
         }
         catch(error){
-            console.error('Error: ',error);
+            setError(true);
         }
     }
 
@@ -65,34 +90,49 @@ const AdminEditCustomers = () => {
             .then((result) => setAllCustData(result.data));
         console.log(allCustData);
     }
+
+    const handleDeleteCustId =(event) => {
+        setDeleteCustId(event.target.value);
+        console.log(deleteCustId);
+    }
+    const handleDeleteCustomers = () => {
+        
+        axios
+            .delete('https://localhost:7223/api/AdminCustomerDataManagement?EmployeeID=' + deleteCustId)
+            .then(result => {console.log("deleted successfully")
+        })
+ 
+    
+    }
     return(
         <center><br></br>
            <h1 className="title">Loan Management Application</h1> <br></br>
            <h3 className="cl1">Customer Master Data Details</h3><br></br><br></br>
-           <form className="myForm">
+           <form className="myForm" onSubmit={handleNewCustomer}>
+           <div>
+                    Employee Name: &nbsp; <input type="text" value={ename} onChange={handleEname}/> 
+                </div><br></br>
                 <div>
-                    Employee Id:&nbsp; <input type="text" value={id} onChange={handleEid}/>
-                    &nbsp;&nbsp;&nbsp;
+                Date of Birth:&nbsp;<input type="date" value={dob} onChange={handleDob}/>
+                &nbsp;&nbsp;&nbsp;
                     Designation : &nbsp;<select value={Designation} onChange={handleDesignation}>
+                                            <option value="select">Select</option>
                                             <option value="Manager">Manager</option>
                                             <option value="Executive">Executive</option>
                                             <option value="Sr.Executive">Sr.Executive</option>
                                             <option value="Clerk">Clerk</option>
                                         </select>
                 </div><br></br>
-                <div>
-                    Employee Name: &nbsp; <input type="text" value={ename} onChange={handleEname}/>
-                    &nbsp;&nbsp;&nbsp;
-                    Date of Birth:&nbsp;<input type="date" value={dob} onChange={handleDob}/>
-                </div><br></br>
+
                 <div>
                     Department:&nbsp;<select value={dept} onChange={handleDept}>
+                                            <option value="select">Select</option>
                                             <option value="Finance">Finance</option>
                                             <option value="HR">HR</option>
                                             <option value="Sales">Sales</option>
                                             <option value="Technology">Technology</option>
                                         </select>&nbsp;&nbsp;
-                    Date of Joining:&nbsp;<input type="date" value={doj} onChange={handleDoj}/>                    
+                                        
                 </div><br></br>
                 <div>
                     Gender : &nbsp;<select value={gender} onChange={handleGender}>
@@ -101,11 +141,79 @@ const AdminEditCustomers = () => {
                                     </select>
                 </div><br></br>
                 <div>
-                    <p><button className="btn1" onClick={handleSubmit}>Add Data</button>&nbsp;&nbsp;
-                    <button className='btn1' onClick={handleGetAllCustomers}>Get All Customers</button> &nbsp;&nbsp;
-                    <button className='btn1'>Log Out</button></p>
+                    <p><button className="btn1" type="submit">Add Data</button></p>&nbsp;&nbsp;
                  </div>   
            </form>
+           <button className='btn1' onClick={handleGetAllCustomers}>Get All Customers</button> &nbsp;&nbsp;
+           {allCustData.map((allCustData, index) => (
+                    <div key={index}>
+                        <div className="card-body">Employee ID: {allCustData?.employeeId}</div>
+                        <div className="card-body">Employee name: {allCustData?.employeeName}</div>
+                        <div className="card-body">Designation: {allCustData?.designation}</div>
+                        <div className="card-body">Department: {allCustData?.department}</div>
+                        <div className="card-body">Gender: {allCustData?.gender}</div>
+                        <div className="card-body">Date of Birth: {allCustData?.dateOfBirth}</div>
+                        <div className="card-body">Date of Joining {allCustData?.dateOfJoining}</div>
+                        <div> <Button className="btn1" onClick={handleEditCust}>Edit Customers</Button> 
+                        {isFormOpen &&(
+                            <form onSubmit={handleSubmitEditCustomers}>
+                                <div>
+                                    Employee ID: <input type="text" value={id} onChange={handleId} />
+                                </div>
+                                <div>
+                    Employee Name: &nbsp; <input type="text" value={ename} onChange={handleEname}/> 
+                </div><br></br>
+                <div>
+                Date of Birth:&nbsp;<input type="date" value={dob} onChange={handleDob}/>
+                &nbsp;&nbsp;&nbsp;
+                    Designation : &nbsp;<select value={Designation} onChange={handleDesignation}>
+                                            <option value="select">Select</option>
+                                            <option value="Manager">Manager</option>
+                                            <option value="Executive">Executive</option>
+                                            <option value="Sr.Executive">Sr.Executive</option>
+                                            <option value="Clerk">Clerk</option>
+                                        </select>
+                </div><br></br>
+
+                <div>
+                    Department:&nbsp;<select value={dept} onChange={handleDept}>
+                                            <option value="select">Select</option>
+                                            <option value="Finance">Finance</option>
+                                            <option value="HR">HR</option>
+                                            <option value="Sales">Sales</option>
+                                            <option value="Technology">Technology</option>
+                                        </select>&nbsp;&nbsp;
+                                        
+                </div><br></br>
+                <div>
+                    Gender : &nbsp;<select value={gender} onChange={handleGender}>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                    </select>
+                </div>
+                                <div>
+                                    <button type = "submit"> Edit Details </button>
+                                </div>
+                            </form>
+
+                        )}  
+                            
+                        </div>
+
+                        <div> 
+                            <form onSubmit={handleDeleteCustomers}>
+                            <div>
+                                Customer Id to delete: <input type="text" onChange={handleDeleteCustId} />
+                            </div> 
+                            <div><Button className = "btn1" type="submit" >Delete Customers</Button>
+                            </div>
+
+                            </form> 
+                        </div>
+                        <br></br>
+                    </div>
+                ))}
+            <button className='btn1'>Log Out</button>
         </center>
     )
 }
