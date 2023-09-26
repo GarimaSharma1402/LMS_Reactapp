@@ -1,178 +1,237 @@
 import React, { useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
 import { AppContext } from '../Context/App.context';
 
 function AdminLoanDataPage() {
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
+
     const [deleteLoanId, setDeleteLoanId] = useState('');
-    const [newType, setNewType]  =useState('');
-    const [newDuration, setNewDuration]= useState('');
-    const [newLoanObj, setNewLoanObj] = useState({loanType: '', durationInYears: ''});
+    const [newType, setNewType] = useState('');
+    const [newDuration, setNewDuration] = useState('');
+    const [newLoanObj, setNewLoanObj] = useState({ loanType: '', durationInYears: '' });
     const [loandata, setloandata] = useState([]);
     const [AllLoanData, setAllLoanData] = useState([]);
     const [cid, setCustid] = useState('');
     const { user, setUser } = useContext(AppContext);
-    const[Error, setError] = useState(false);
+    const [Error, setError] = useState(false);
+    const [isModalOpen, setModalOpen] = useState(false);
     const [isFormOpen, setIsFormOpen] = useState(false);
 
     const [token, setToken] = useState('');
-    const [loanEditObj,setloanEditObj] = useState({loanId: '', loanType: '', durationInYears: ''});
-    const[loanId,setLoanId] = useState('');
-    const[loanType,setLoanType] = useState('');
+    const [loanEditObj, setloanEditObj] = useState({ loanId: '', loanType: '', durationInYears: '' });
+    const [loanId, setLoanId] = useState('');
+    const [loanType, setLoanType] = useState('select');
     const [durationInYears, setDurationInYears] = useState('');
-    const loanTypeNavigation = null;
 
-    const handleNewType = (event) =>{
+    const openModal = () => { setModalOpen(true); }
+    const closeModal = () => { setModalOpen(false); }
+
+    const handleNewType = (event) => {
         setNewType(event.target.value);
     }
-    const handleNewDuration = (event) =>{
+
+    const handleNewDuration = (event) => {
         setNewDuration(event.target.value);
     }
-    const handleNewLoan  = async (event) =>{
+
+    const handleNewLoan = async (event) => {
         newLoanObj.loanType = newType;
         newLoanObj.durationInYears = newDuration;
         event.preventDefault();
-        try{
-            const response=await axios
-                .post('https://localhost:7223/api/AdminLoanCardManagement/AddLoanCard',
-                newLoanObj
-                )
-            
+        try {
+            console.log(newLoanObj);
+            const response = await axios.post('https://localhost:7223/api/AdminLoanCardManagement/AddLoanCard', newLoanObj);
             console.log(response.data);
-           
-        }
-        catch(error){
+        } catch (error) {
             setError(true);
         }
-  
-    
     }
-    
-    const handleLoandata = () => {
-        axios
-            .get('https://localhost:7223/api/AdminLoanCardManagement/GetAllLoans')
+
+    const handleLoanData = () => {
+        axios.get('https://localhost:7223/api/AdminLoanCardManagement/GetAllLoans')
             .then((result) => setAllLoanData(result.data));
     };
-    const handleLoanId =(event) => {
+
+    const handleLoanId = (event) => {
         setLoanId(event.target.value);
     }
-    const handleLoanType =(event) => {
+
+    const handleLoanType = (event) => {
         setLoanType(event.target.value);
     }
-    const handleLoanDuration =(event) => {
+
+    const handleLoanDuration = (event) => {
         setDurationInYears(event.target.value);
     }
+
     const handleEditLoan = () => {
         setIsFormOpen(true);
     };
-    const handleSubmitEditLoan = async(event)=>{
+
+    const handleSubmitEditLoan = async (event) => {
         loanEditObj.loanId = loanId;
         loanEditObj.loanType = loanType;
         loanEditObj.durationInYears = durationInYears;
-
         event.preventDefault();
-        try{
+        try {
             console.log(loanEditObj);
-            const response=await axios
-                .put('https://localhost:7223/api/AdminLoanCardManagement/UpdateLoanCard/' + loanId,
-                loanEditObj
-                )
-                alert(response.data);
-        }
-        catch(error){
+            const response = await axios.put('https://localhost:7223/api/AdminLoanCardManagement/UpdateLoanCard/' + loanId, loanEditObj);
+            alert(response.data);
+        } catch (error) {
             setError(true);
         }
         setIsFormOpen(false);
     }
 
-    const handleDeleteLoanId =(event) => {
+    const handleDeleteLoanId = (event) => {
         setDeleteLoanId(event.target.value);
-    }
-    const handleDeleteLoan = () => {
         
-        axios
-            .delete('https://localhost:7223/api/AdminLoanCardManagement/DeleteLoanCard/' + deleteLoanId)
-            .then(result => {console.log("deleted successfully")
-        })
-    
     }
 
-
+    const handleDeleteLoan = (event) => {
+        event.preventDefault();
+        axios.delete('https://localhost:7223/api/AdminLoanCardManagement/DeleteLoanCard/' + deleteLoanId)
+            .then(result => {
+                console.log("deleted successfully")
+            });
+           
+            
+    }
 
     return (
         <div>
-            <div className="card text-center m-3">
-                <h1>Loan Data Management</h1>
-                <h3>Add New Loan Data </h3>
-                <form onSubmit={handleNewLoan}>
-                    <div>
-                    Loan Type: 
-                        <select onChange={handleNewType}>
-                            <option value="select">Select</option>
-                            <option value="Furniture">Furniture</option>
-                            <option value="Stationery">Stationery</option>
-                            <option value="Crockery">Crockery</option>
-                        </select>
-                    </div>
-                    <div>
-                        Loan Duration: <input type="text" onChange={handleNewDuration} />
-                    </div>
-                    <div>
-                        <button type = "submit"> Add New Loan </button>
-                    </div>
-                </form>                    
-                <br></br>     
-                <button onClick={handleLoandata}>Get Loan data for all Customers </button> 
-                {AllLoanData.map((AllLoanData, index) => (
-                    <div key={index}>
-                        <div className="card-body">Loan ID: {AllLoanData?.LoanId}</div>
-                        <div className="card-body">Loan Type: {AllLoanData?.loanType}</div>
-                        <div className="card-body">
-                            Loan Duration: {AllLoanData?.durationInYears}
+            <Card className="text-center m-3">
+                <CardContent>
+                    <Typography variant="h4">Loan Data Management</Typography>
+                    <Typography variant="h5">Add New Loan Data</Typography>
+                    <form onSubmit={handleNewLoan}>
+                        <FormControl variant="outlined" fullWidth>
+                            <InputLabel>Loan Type</InputLabel>
+                            <Select
+                                label="Loan Type"
+                                onChange={handleNewType}
+                                value={newType}
+                            >
+                                <MenuItem value="select">Select</MenuItem>
+                                <MenuItem value="Furniture">Furniture</MenuItem>
+                                <MenuItem value="Stationery">Stationery</MenuItem>
+                                <MenuItem value="Crockery">Crockery</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <FormControl variant="outlined" fullWidth>
+                            <TextField
+                                label="Loan Duration"
+                                type="text"
+                                variant="outlined"
+                                value={newDuration}
+                                onChange={handleNewDuration}
+                            />
+                        </FormControl>
+                        <Button variant="contained" color="primary" type="submit">Add New Loan</Button>
+                    </form>
+                    <br />
+                    <Button variant="contained" color="primary" onClick={handleLoanData}>
+                        Get Loan data for all Customers
+                    </Button>
+                    {AllLoanData.map((AllLoanData, index) => (
+                        <div key={index} className="card text-center m-3">
+                            <CardContent>
+                                <Typography variant="body1">Loan ID: {AllLoanData?.loanId}</Typography>
+                                <Typography variant="body1">Loan Type: {AllLoanData?.loanType}</Typography>
+                                <Typography variant="body1">Loan Duration: {AllLoanData?.durationInYears}</Typography>
+                                <div>
+                                    <Button variant="contained" color="warning" onClick={openModal}>
+                                        Edit Loans
+                                    </Button>
+                                    <Modal
+                                        open={isModalOpen}
+                                        onClose={closeModal}
+                                        aria-labelledby="modal-modal-title"
+                                        aria-describedby="modal-modal-description"
+                                    >
+                                        <Box sx={style}>
+                                            <Typography variant="h6" component="h2">
+                                                Edit Loan Details
+                                            </Typography>
+                                            <form onSubmit={handleSubmitEditLoan}>
+                                            <FormControl variant="outlined" fullWidth>
+                                                <InputLabel>Loan ID:</InputLabel>
+                                                <TextField
+                                                    id="outlined-controlled"
+                                                    label="Loan Id"
+                                                    value={loanId}
+                                                    onChange={handleLoanId}
+                                                />
+                                            </FormControl>
+                                                <FormControl variant="outlined" fullWidth>
+                                                    <InputLabel>Loan Type</InputLabel>
+                                                    <Select
+                                                        label="Loan Type"
+                                                        value={loanType}
+                                                        onChange={handleLoanType}
+                                                    >
+                                                        <MenuItem value="select">Select</MenuItem>
+                                                        <MenuItem value="Furniture">Furniture</MenuItem>
+                                                        <MenuItem value="Stationery">Stationery</MenuItem>
+                                                        <MenuItem value="Crockery">Crockery</MenuItem>
+                                                    </Select>
+                                                </FormControl>
+                                                <FormControl variant="outlined" fullWidth>
+                                                    <TextField
+                                                        label="Loan Duration"
+                                                        type="text"
+                                                        variant="outlined"
+                                                        value={durationInYears}
+                                                        onChange={handleLoanDuration}
+                                                    />
+                                                </FormControl>
+                                                <Button variant="contained" color="primary" type="submit">Edit Details</Button>
+                                            </form>
+                                        </Box>
+                                    </Modal>
+                                </div>
+                                <div>
+                                    <form onSubmit={handleDeleteLoan}>
+                                        <FormControl variant="outlined" fullWidth>
+                                            <TextField
+                                                label="Loan Id to delete"
+                                                type="text"
+                                                variant="outlined"
+                                                onChange={handleDeleteLoanId}
+                                            />
+                                        </FormControl>
+                                        <Button variant="contained" color="error" type="submit">Delete Loans</Button>
+                                    </form>
+                                </div>
+                            </CardContent>
                         </div>
-                        <div> <Button className="btn1" onClick={handleEditLoan}>Edit Loans</Button> 
-                        {isFormOpen &&(
-                            <form onSubmit={handleSubmitEditLoan}>
-                                <div>
-                                    Loan ID: <input type="text" value={loanId} onChange={handleLoanId} />
-                                </div>
-                                <div>
-                                    Loan Type: 
-                                    <select value={loanType} onChange={handleLoanType}>
-                                    <option value="select">Select</option>
-                                    <option value="Furniture">Furniture</option>
-                                    <option value="Stationery">Stationery</option>
-                                    <option value="Crockery">Crockery</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    Loan Duration: <input type="text" value={durationInYears} onChange={handleLoanDuration} />
-                                </div>
-                                <div>
-                                    <button type = "submit"> Edit Details </button>
-                                </div>
-                            </form>
-
-                        )}  
-                            
-                        </div>
-
-                        <div> 
-                            <form onSubmit={handleDeleteLoan}>
-                            <div>
-                                Loan Id to delete: <input type="text" onChange={handleDeleteLoanId} />
-                            </div> 
-                            <div><Button className = "btn1" type="submit" >Delete Loans</Button>
-                            </div>
-
-                            </form> 
-                        </div>
-                        <br></br>
-                    </div>
-                ))}
-                <button onClick={() => { setUser(null) }}> Logout </button>
-            </div>
+                    ))}
+                    <Button variant="contained" color="error" onClick={() => { setUser(null) }}>Logout</Button>
+                </CardContent>
+            </Card>
         </div>
     );
 }
+
 export default AdminLoanDataPage;
