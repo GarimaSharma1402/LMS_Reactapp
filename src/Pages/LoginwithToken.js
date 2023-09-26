@@ -27,7 +27,7 @@ const LoginwithToken = () =>{
                 )
             setUser(response.data);
             console.log(response.data);
-            sessionStorage.setItem("Cid", response.data.employeeId);
+            sessionStorage.setItem("Cid", response.data.employee_Id);
             sessionStorage.setItem("role", response.data.role);
             const y = sessionStorage.getItem("Cid");
             console.log(y)
