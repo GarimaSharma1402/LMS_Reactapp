@@ -88,12 +88,13 @@ function AdminLoanDataPage() {
     const handleDeleteLoanId =(event) => {
         setDeleteLoanId(event.target.value);
     }
-    const handleDeleteLoan = () => {
-        
+    const handleDeleteLoan = (event) => {
+        event.preventDefault();
         axios
             .delete('https://localhost:7223/api/AdminLoanCardManagement/DeleteLoanCard/' + deleteLoanId)
             .then(result => {console.log("deleted successfully")
         })
+        alert(" Loan Id "+ deleteLoanId+" deleted successfully");
     
     }
 
@@ -125,7 +126,7 @@ function AdminLoanDataPage() {
                 <button onClick={handleLoandata}>Get Loan data for all Customers </button> 
                 {AllLoanData.map((AllLoanData, index) => (
                     <div key={index}>
-                        <div className="card-body">Loan ID: {AllLoanData?.LoanId}</div>
+                        <div className="card-body">Loan ID: {AllLoanData?.loanId}</div>
                         <div className="card-body">Loan Type: {AllLoanData?.loanType}</div>
                         <div className="card-body">
                             Loan Duration: {AllLoanData?.durationInYears}
