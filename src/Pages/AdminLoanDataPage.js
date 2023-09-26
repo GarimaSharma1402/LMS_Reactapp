@@ -35,7 +35,8 @@ function AdminLoanDataPage() {
     const [cid, setCustid] = useState('');
     const { user, setUser } = useContext(AppContext);
     const [Error, setError] = useState(false);
-    const [isModalOpen, setModalOpen] = useState(false);
+    const [isModalOpen1, setModalOpen1] = useState(false);
+    const [isModalOpen2, setModalOpen2] = useState(false);
     const [isFormOpen, setIsFormOpen] = useState(false);
 
     const [token, setToken] = useState('');
@@ -44,8 +45,11 @@ function AdminLoanDataPage() {
     const [loanType, setLoanType] = useState('select');
     const [durationInYears, setDurationInYears] = useState('');
 
-    const openModal = () => { setModalOpen(true); }
-    const closeModal = () => { setModalOpen(false); }
+    const openModal1 = () => { setModalOpen1(true); }
+    const closeModal1 = () => { setModalOpen1(false); }
+
+    const openModal2 = () => { setModalOpen2(true); }
+    const closeModal2 = () => { setModalOpen2(false); }
 
     const handleNewType = (event) => {
         setNewType(event.target.value);
@@ -106,7 +110,7 @@ function AdminLoanDataPage() {
 
     const handleDeleteLoanId = (event) => {
         setDeleteLoanId(event.target.value);
-        
+
     }
 
     const handleDeleteLoan = (event) => {
@@ -115,8 +119,8 @@ function AdminLoanDataPage() {
             .then(result => {
                 console.log("deleted successfully")
             });
-           
-            
+
+
     }
 
     return (
@@ -161,12 +165,12 @@ function AdminLoanDataPage() {
                                 <Typography variant="body1">Loan Type: {AllLoanData?.loanType}</Typography>
                                 <Typography variant="body1">Loan Duration: {AllLoanData?.durationInYears}</Typography>
                                 <div>
-                                    <Button variant="contained" color="warning" onClick={openModal}>
-                                        Edit Loans
+                                    <Button variant="contained" color="warning" onClick={openModal1}>
+                                        Edit Loan
                                     </Button>
                                     <Modal
-                                        open={isModalOpen}
-                                        onClose={closeModal}
+                                        open={isModalOpen1}
+                                        onClose={closeModal1}
                                         aria-labelledby="modal-modal-title"
                                         aria-describedby="modal-modal-description"
                                     >
@@ -175,15 +179,15 @@ function AdminLoanDataPage() {
                                                 Edit Loan Details
                                             </Typography>
                                             <form onSubmit={handleSubmitEditLoan}>
-                                            <FormControl variant="outlined" fullWidth>
-                                                <InputLabel>Loan ID:</InputLabel>
-                                                <TextField
-                                                    id="outlined-controlled"
-                                                    label="Loan Id"
-                                                    value={loanId}
-                                                    onChange={handleLoanId}
-                                                />
-                                            </FormControl>
+                                                <FormControl variant="outlined" fullWidth>
+                                                    <InputLabel>Loan ID:</InputLabel>
+                                                    <TextField
+                                                        id="outlined-controlled"
+                                                        label="Loan Id"
+                                                        value={loanId}
+                                                        onChange={handleLoanId}
+                                                    />
+                                                </FormControl>
                                                 <FormControl variant="outlined" fullWidth>
                                                     <InputLabel>Loan Type</InputLabel>
                                                     <Select
@@ -212,17 +216,29 @@ function AdminLoanDataPage() {
                                     </Modal>
                                 </div>
                                 <div>
-                                    <form onSubmit={handleDeleteLoan}>
-                                        <FormControl variant="outlined" fullWidth>
-                                            <TextField
-                                                label="Loan Id to delete"
-                                                type="text"
-                                                variant="outlined"
-                                                onChange={handleDeleteLoanId}
-                                            />
-                                        </FormControl>
-                                        <Button variant="contained" color="error" type="submit">Delete Loans</Button>
-                                    </form>
+                                    <Button variant="contained" color="error" onClick={openModal2}>
+                                        Delete Loan
+                                    </Button>
+                                    <Modal
+                                        open={isModalOpen2}
+                                        onClose={closeModal2}
+                                        aria-labelledby="modal-modal-title"
+                                        aria-describedby="modal-modal-description"
+                                    >
+                                        <Box sx={style}>
+                                        <form onSubmit={handleDeleteLoan}>
+                                            <FormControl variant="outlined" fullWidth>
+                                                <TextField
+                                                    label="Loan Id to delete"
+                                                    type="text"
+                                                    variant="outlined"
+                                                    onChange={handleDeleteLoanId}
+                                                />
+                                            </FormControl>
+                                            <Button variant="contained" color="error" type="submit">Delete Loan</Button>
+                                        </form>
+                                        </Box>
+                                    </Modal>
                                 </div>
                             </CardContent>
                         </div>
