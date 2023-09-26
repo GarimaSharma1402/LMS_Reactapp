@@ -124,7 +124,7 @@ const RegisterPage = () => {
         <h3 className="title">Register here</h3>
         <p>
           Already Registered? &nbsp;&nbsp;
-          <a href="http://localhost:3000/login">Login here</a>
+          <a href="http://localhost:3000/">Login here</a>
         </p>
         <form className="myForm" onSubmit={handleSubmit}>
           <div>
