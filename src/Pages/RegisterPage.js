@@ -4,6 +4,7 @@ import { AppContext } from "../Context/App.context";
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import "./MyStyle.css";
+import EmployeeCredentialFormPage from "./EmployeeCredentialFormPage";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const RegisterPage = () => {
     event.preventDefault();
     try{
         const response=await axios
-            .post('https://localhost:7223/api/Register/RegisterEmployeeCredential',
+            .post('https://localhost:7223/api/Register/'+employeeId,
             registerobj
             )
         
