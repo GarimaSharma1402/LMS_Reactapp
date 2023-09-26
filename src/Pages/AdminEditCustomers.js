@@ -59,8 +59,27 @@ const AdminEditCustomers = () => {
     const handleDesignation =(event) =>{
         setDesignation(event.target.value);
     };
-    const handleEditCust = async(event)=>{
+    const handleEditCust = async(customerId)=>{
+        try {
+            // Find the customer record based on the customerId
+            const customerToEdit = allCustData.find((customer) => customer.employeeId === customerId);
+            
+            // Set the state to populate the form with customer details
+            setcustomerEditObj({
+              employeeId: customerToEdit.employeeId,
+              employeeName: customerToEdit.employeeName,
+              designation: customerToEdit.designation,
+              department: customerToEdit.department,
+              gender: customerToEdit.gender,
+              dateOfBirth: customerToEdit.dateOfBirth,
+            });
+            console.log(customerToEdit);
+            SetId(customerToEdit.employeeId);
         setIsFormOpen(true);
+        }
+        catch (error) {
+            console.error('Error editing customer:', error);
+          }
         
     }
 
@@ -71,7 +90,9 @@ const AdminEditCustomers = () => {
         newCustObj.gender=gender;
         newCustObj.dateOfBirth=dob;
         event.preventDefault();
+
         try{
+            console.log(newCustObj);
             const response=await axios
                 .post('https://localhost:7223/api/AdminCustomerDataManagement',
                 newCustObj
@@ -95,15 +116,20 @@ const AdminEditCustomers = () => {
         setDeleteCustId(event.target.value);
         console.log(deleteCustId);
     }
-    const handleDeleteCustomers = () => {
-        
-        axios
-            .delete('https://localhost:7223/api/AdminCustomerDataManagement?EmployeeID=' + deleteCustId)
-            .then(result => {console.log("deleted successfully")
-        })
- 
+    const handleDeleteCust = async (customerId) => {
+        try {
+          // Implement your delete logic here based on the customerId
+          // You can use this function to trigger the delete action
+          const response = await axios.delete(`https://localhost:7223/api/AdminCustomerDataManagement?EmployeeID=${customerId}`);
+          console.log(response.data);
     
-    }
+          // Refresh the customer list after deletion
+          handleGetAllCustomers();
+        } catch (error) {
+          console.error('Error deleting customer:', error);
+        }
+      };
+    
     return(
         <center><br></br>
            <h1 className="title">Loan Management Application</h1> <br></br>
@@ -154,11 +180,11 @@ const AdminEditCustomers = () => {
                         <div className="card-body">Gender: {allCustData?.gender}</div>
                         <div className="card-body">Date of Birth: {allCustData?.dateOfBirth}</div>
                         <div className="card-body">Date of Joining {allCustData?.dateOfJoining}</div>
-                        <div> <Button className="btn1" onClick={handleEditCust}>Edit Customers</Button> 
+                        <div> <Button className="btn1" onClick={() => handleEditCust(allCustData?.employeeId)}>Edit Customers</Button> 
                         {isFormOpen &&(
                             <form onSubmit={handleSubmitEditCustomers}>
                                 <div>
-                                    Employee ID: <input type="text" value={id} onChange={handleId} />
+                                    Employee ID: <input type="text" value={id} readOnly />
                                 </div>
                                 <div>
                     Employee Name: &nbsp; <input type="text" value={ename} onChange={handleEname}/> 
@@ -200,16 +226,11 @@ const AdminEditCustomers = () => {
                             
                         </div>
 
-                        <div> 
-                            <form onSubmit={handleDeleteCustomers}>
-                            <div>
-                                Customer Id to delete: <input type="text" onChange={handleDeleteCustId} />
-                            </div> 
-                            <div><Button className = "btn1" type="submit" >Delete Customers</Button>
-                            </div>
-
-                            </form> 
-                        </div>
+                        <div>
+            <Button className="btn1" onClick={() => handleDeleteCust(allCustData?.employeeId)}>
+              Delete Customer
+            </Button>
+          </div>
                         <br></br>
                     </div>
                 ))}
