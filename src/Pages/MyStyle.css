@@ -126,3 +126,10 @@ color: white;
 .links a{
 margin-left: 4px;
 }
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Add spacing between cards */
+    background-color:blueviolet;
+  }
