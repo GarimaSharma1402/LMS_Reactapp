@@ -14,7 +14,7 @@ function AdminLoanDataPage() {
     const { user, setUser } = useContext(AppContext);
     const[Error, setError] = useState(false);
     const [isFormOpen, setIsFormOpen] = useState(false);
-
+    const [icategoryOptions, setIcategoryOptions] = useState([]); // State to store category options
     const [token, setToken] = useState('');
     const [loanEditObj,setloanEditObj] = useState({loanId: '', loanType: '', durationInYears: ''});
     const[loanId,setLoanId] = useState('');
@@ -29,7 +29,7 @@ function AdminLoanDataPage() {
         setNewDuration(event.target.value);
     }
     const handleNewLoan  = async (event) =>{
-        newLoanObj.loanType = newType;
+        newLoanObj.loanType = loanType;
         newLoanObj.durationInYears = newDuration;
         event.preventDefault();
         try{
@@ -48,10 +48,13 @@ function AdminLoanDataPage() {
     
     }
     
-    const handleLoandata = () => {
-        axios
+    const handleLoandata = async(event) => {
+        await axios
             .get('https://localhost:7223/api/AdminLoanCardManagement/GetAllLoans')
-            .then((result) => setAllLoanData(result.data));
+            .then((result) => 
+            setAllLoanData(result.data));
+        console.log(AllLoanData);
+            
     };
     const handleLoanId =(event) => {
         setLoanId(event.target.value);
@@ -62,8 +65,22 @@ function AdminLoanDataPage() {
     const handleLoanDuration =(event) => {
         setDurationInYears(event.target.value);
     }
-    const handleEditLoan = () => {
-        setIsFormOpen(true);
+    const handleEditLoan = async(_loanId)=>{
+
+        try
+        {
+            const loanToEdit = AllLoanData.find((loanRecord) => loanRecord.loanId == _loanId);
+            setloanEditObj({
+                loanId: loanToEdit.loanId, 
+                loanType: loanToEdit.loanType, 
+                durationInYears: loanToEdit.durationInYears});
+            setLoanId(loanToEdit.loanId);
+            setIsFormOpen(true);
+        }
+        catch (error) {
+            console.error('Error editing loan:', error);
+          }
+        
     };
     const handleSubmitEditLoan = async(event)=>{
         loanEditObj.loanId = loanId;
@@ -88,16 +105,36 @@ function AdminLoanDataPage() {
     const handleDeleteLoanId =(event) => {
         setDeleteLoanId(event.target.value);
     }
-    const handleDeleteLoan = () => {
+    const handleDeleteLoan = async (_loanId) => {
         
         axios
-            .delete('https://localhost:7223/api/AdminLoanCardManagement/DeleteLoanCard/' + deleteLoanId)
+            .delete('https://localhost:7223/api/AdminLoanCardManagement/DeleteLoanCard/' + _loanId)
             .then(result => {console.log("deleted successfully")
         })
     
     }
+        // Use useEffect to fetch category options when the component mounts
+        useEffect(() => {
+            // Make an API call to fetch category options
+            // Replace 'YOUR_CATEGORY_API_ENDPOINT' with your actual API endpoint
+            axios.get('https://localhost:7223/api/Category/Categories')
+                .then((response) => {
+                    // Assuming the response data is an array of category options
+                    const categories = response.data;
+                    console.log(response);
+                    setIcategoryOptions(categories);
+                    if(categories.length==1){setLoanType(categories[0])};
+                })
+                .catch((error) => {
+                    console.error("Error fetching category options:", error);
+                    // Handle the error appropriately, e.g., display an error message
+                });
+        }, []); // Run this effect only once when the component mounts
 
+        useEffect(() => {
 
+            console.log(AllLoanData);
+        },[AllLoanData]);
 
     return (
         <div>
@@ -105,15 +142,15 @@ function AdminLoanDataPage() {
                 <h1>Loan Data Management</h1>
                 <h3>Add New Loan Data </h3>
                 <form onSubmit={handleNewLoan}>
-                    <div>
-                    Loan Type: 
-                        <select onChange={handleNewType}>
-                            <option value="select">Select</option>
-                            <option value="Furniture">Furniture</option>
-                            <option value="Stationery">Stationery</option>
-                            <option value="Crockery">Crockery</option>
-                        </select>
-                    </div>
+                <div>
+                    Loan Type:
+                    <select value={loanType} onChange={handleLoanType}>
+                        <option value="" disabled>Select an Item Category</option>
+                        {icategoryOptions.map((option) => (
+                            <option key={option} value={option}>{option}</option>
+                        ))}
+                    </select>
+                </div>
                     <div>
                         Loan Duration: <input type="text" onChange={handleNewDuration} />
                     </div>
@@ -125,26 +162,26 @@ function AdminLoanDataPage() {
                 <button onClick={handleLoandata}>Get Loan data for all Customers </button> 
                 {AllLoanData.map((AllLoanData, index) => (
                     <div key={index}>
-                        <div className="card-body">Loan ID: {AllLoanData?.LoanId}</div>
+                        <div className="card-body">Loan ID: {AllLoanData?.loanId}</div>
                         <div className="card-body">Loan Type: {AllLoanData?.loanType}</div>
                         <div className="card-body">
                             Loan Duration: {AllLoanData?.durationInYears}
                         </div>
-                        <div> <Button className="btn1" onClick={handleEditLoan}>Edit Loans</Button> 
+                        <div> <Button className="btn1" onClick={() => handleEditLoan(AllLoanData?.loanId)}>Edit Loans</Button> 
                         {isFormOpen &&(
                             <form onSubmit={handleSubmitEditLoan}>
                                 <div>
-                                    Loan ID: <input type="text" value={loanId} onChange={handleLoanId} />
+                                    Loan ID: <input type="text" value={loanId} readOnly />
                                 </div>
                                 <div>
-                                    Loan Type: 
-                                    <select value={loanType} onChange={handleLoanType}>
-                                    <option value="select">Select</option>
-                                    <option value="Furniture">Furniture</option>
-                                    <option value="Stationery">Stationery</option>
-                                    <option value="Crockery">Crockery</option>
-                                    </select>
-                                </div>
+                    Loan Type:
+                    <select value={loanType} onChange={handleLoanType}>
+                        <option value="" disabled>Select an Item Category</option>
+                        {icategoryOptions.map((option) => (
+                            <option key={option} value={option}>{option}</option>
+                        ))}
+                    </select>
+                </div>
                                 <div>
                                     Loan Duration: <input type="text" value={durationInYears} onChange={handleLoanDuration} />
                                 </div>
@@ -157,16 +194,9 @@ function AdminLoanDataPage() {
                             
                         </div>
 
-                        <div> 
-                            <form onSubmit={handleDeleteLoan}>
-                            <div>
-                                Loan Id to delete: <input type="text" onChange={handleDeleteLoanId} />
-                            </div> 
-                            <div><Button className = "btn1" type="submit" >Delete Loans</Button>
-                            </div>
-
-                            </form> 
-                        </div>
+                        <Button className="btn1" onClick={() => handleDeleteLoan(AllLoanData.loanId)}>
+              Delete Loan
+            </Button>
                         <br></br>
                     </div>
                 ))}
