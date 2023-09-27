@@ -11,7 +11,7 @@ function UserItemsPage() {
     const handleSubmit = () => {
         console.log(cid);
         axios
-            .get('https://localhost:7223/api/DisplayItemPurchaseById/' + cid)
+            .get('https://localhost:7223/api/EmployeeManagement/DisplayAllItemsPurchasedByID/' + cid)
             .then((response) => setItemData(response.data));
         if(itemData===null) {
             alert("No data found!");

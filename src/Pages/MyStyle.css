@@ -1,40 +1,45 @@
 .title {
     text-align: center;
-    width:70vw;
-    background-color: rgb(190,164,214);
-    padding: 2vw 1vw;
+    width: 70vw;
+    background-color: #bea4d6; /* Updated background color */
+    padding: 1.5rem 1rem; /* Adjusted padding */
     border-radius: 10px 10px 0 0;
     font-size: 2rem;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     align-items: center;
+    margin: 0 auto;
 }
 
 .cl1 {
-    background-color: red;
+    background-color: #ff6b6b; /* Updated background color */
     width: 70vw;
 }
-
 .myForm {
     text-align: center;
     display: flex;
     flex-direction: column;
     margin: auto;
-    width:70vw;
-    padding: 2vw 1vw;
-    background-color: rgb(250,194,194);
+    width: 70vw;
+    padding: 1.5rem 1rem; /* Adjusted padding */
+    background-color: #fac2c2; /* Updated background color */
     border-radius: 0 0 10px 10px;
 }
 
+
 .btn1 {
     background-color: white;
-    font: size 20px;
+    font-size: 20px;
     text-align: center;
     padding: 15px 30px;
     transition-duration: 0.5s;
+    border: none;
+    cursor: pointer;
+    margin-top: 1rem; /* Added margin */
 }
 
-.btn1:hover{
-    background-color: green;
+
+.btn1:hover {
+    background-color: #4caf50; /* Updated hover color */
 }
 
 

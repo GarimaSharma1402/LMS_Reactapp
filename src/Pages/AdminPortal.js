@@ -18,6 +18,11 @@ const AdminPortal = () => {
     {
         navigate('/AdminViewItems');
     }
+    const handleLoanRequests = async(event) =>
+    {
+        navigate('/LoanRequestList');
+    }
+    
 
     return(
         <center>
@@ -27,6 +32,7 @@ const AdminPortal = () => {
                 <Button className="btn1" onClick={handleCustomer}>Customer Data Management</Button>
                 <Button className="btn1" onClick={handleClick}>Loan Card Management</Button>
                 <Button className="btn1" onClick={handleItems}>Items Master Data</Button>
+                <Button className="btn1" onClick={handleLoanRequests}>Loan Requests</Button>
             </Stack>
         </center>
     )
