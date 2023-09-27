@@ -21,6 +21,7 @@ import EmployeeCredentialFormPage from './Pages/EmployeeCredentialFormPage';
 import CustomerLoanDataPage from './Pages/AdminEditCustomers';
 import AdminEditCustomers from './Pages/AdminEditCustomers';
 import AdminItemDataPage from './Pages/AdminItemDataPage';
+import LoanRequestList from './Pages/AdminLoanRequests';
 
 const router = createBrowserRouter([
   
@@ -96,6 +97,12 @@ const router = createBrowserRouter([
     path: "/AdminViewItems",
     element: <ProtectedRoute>
     <AdminItemDataPage/>
+    </ProtectedRoute>
+  },
+  {
+    path : "/LoanRequestList",
+    element : <ProtectedRoute>
+      <LoanRequestList/>
     </ProtectedRoute>
   }
 

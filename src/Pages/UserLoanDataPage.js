@@ -14,7 +14,7 @@ function UserLoanDataPage() {
         // console.log(headers);
         console.log(cid);
         axios
-            .get('https://localhost:7223/api/LoanCard/employee/' + cid)
+            .get('https://localhost:7223/api/EmployeeManagement/GetAllLoansByID/' + cid)
             .then((response) => setloandata(response.data));
         console.log(loandata);
     };

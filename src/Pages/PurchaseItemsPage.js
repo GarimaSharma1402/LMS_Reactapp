@@ -12,7 +12,7 @@ const PurchaseItemsPage = () => {
     const [tenureOptions, setTenureOptions] = useState([]);
     const [itenure, setTenure] = useState(10);
     const [desc , setDesc] = useState(null);
-    const [ivalue, setIvalue] = useState(null);
+    const [ivalue, setIvalue] = useState('');;
 
     // Use useEffect to update eid when user changes
     useEffect(() => {
@@ -93,8 +93,7 @@ const PurchaseItemsPage = () => {
         setDesc(event.target.value);
     }
     const handleIvalue =(event) =>{
-        const parsedValue = parseInt(event.target.value, 10);
-        setIvalue(parsedValue);
+        setIvalue(event.target.value);
     }
     const handleImake =(event) =>{
         setImake(event.target.value);
